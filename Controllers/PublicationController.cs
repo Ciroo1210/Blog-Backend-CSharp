@@ -8,44 +8,47 @@ namespace Blog.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PublicationController : ControllerBase
+    public class ArticleController : ControllerBase
     {
-        private readonly BlogContext db;
-        public PublicationController(BlogContext context)
+        private readonly BlogContext _context;
+        public ArticleController(BlogContext context)
         {
-            db = context;
+            _context = context;
         }
+
         [HttpPost]
-        public async Task<ActionResult> PostPublication([FromBody]PublicationTable dataPubl)
+        public async Task<ActionResult> AddArticle([FromBody] PublicationTable article)
         {
-            db.Add(dataPubl);
-            await db.SaveChangesAsync();
+            _context.Add(article);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
+
         [HttpPut]
-        public async Task<ActionResult> PutPublication([FromBody]PublicationTable dataPubl, int id)
+        public async Task<ActionResult> UpdateArticle([FromBody] PublicationTable article, int articleId)
         {
-            var publ = await db.PublicationTables.FirstOrDefaultAsync(x => x.IdPublication == id);
-            if (id == null)
+            var existingArticle = await _context.Publications.FirstOrDefaultAsync(x => x.IdPublication == articleId);
+            if (existingArticle == null)
             {
                 return NoContent();
             }
-            publ.Content = dataPubl.Content;
-            await db.SaveChangesAsync();
+            existingArticle.Content = article.Content;
+            await _context.SaveChangesAsync();
             return Ok();
         }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<PublicationTable>>> GetPublication()
-        {
-            var publ = await db.PublicationTables.ToListAsync();
 
-            return Ok(publ);
-        }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<PublicationTable>>> GetPublication(int id)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PublicationTable>>> GetArticles()
         {
-            var publ = await db.PublicationTables.FirstOrDefaultAsync(x => x.IdPublication == id);
-            return Ok(publ);
+            var articles = await _context.Publications.ToListAsync();
+            return Ok(articles);
+        }
+
+        [HttpGet("{articleId}")]
+        public async Task<ActionResult<PublicationTable>> GetArticle(int articleId)
+        {
+            var article = await _context.Publications.FirstOrDefaultAsync(x => x.IdPublication == articleId);
+            return Ok(article);
         }
     }
 }

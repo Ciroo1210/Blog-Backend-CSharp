@@ -6,45 +6,41 @@ namespace Blog.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReplyController : ControllerBase
+    public class CommentController : ControllerBase
     {
-        private readonly BlogContext db;
-        public ReplyController(BlogContext context)
+        private readonly BlogContext _context;
+        public CommentController(BlogContext context)
         {
-            db = context;
+            _context = context;
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostReply(int id, [FromBody] ReplyTable replyTable)
+        public async Task<ActionResult> AddComment(int publicationId, [FromBody] ReplyTable comment)
         {
-            
-            var publication = await db.PublicationTables.FindAsync(id);
+            var publication = await _context.Publications.FindAsync(publicationId);
             if (publication == null)
             {
-                return NotFound("La publicación no existe.");
+                return NotFound("Publication not found.");
             }
 
-            
-            replyTable.IdPublication = id;
-
-           
-            db.Add(replyTable);
-            await db.SaveChangesAsync();
+            comment.IdPublication = publicationId;
+            _context.Add(comment);
+            await _context.SaveChangesAsync();
 
             return Ok();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<ReplyTable>>> GetReply(int id)
+        [HttpGet("{publicationId}")]
+        public async Task<ActionResult<IEnumerable<ReplyTable>>> GetComments(int publicationId)
         {
-            var replys = await db.ReplyTables.Where(x => x.IdPublication == id).ToListAsync();
+            var comments = await _context.Replies.Where(x => x.IdPublication == publicationId).ToListAsync();
 
-            if (replys == null || !replys.Any())
+            if (comments == null || !comments.Any())
             {
-                return NotFound("No hay ninguna respuesta");
+                return NotFound("No comments found.");
             }
 
-            return Ok(replys);
+            return Ok(comments);
         }
     }
 }
