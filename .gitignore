@@ -1,0 +1,82 @@
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj.user
+*.filters
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Roslyn cache
+*.ide/
+
+# MSTest test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NCrunch
+*_NCrunch_*
+.*crunch*.local.xml
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+
+# Build and Debug output
+build/
+logs/
+TestResults/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# IIS Logs
+IISExpress/logs/
+
+# Visual Studio Code
+.vscode/
+
+# Windows file system
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Microsoft Azure SDK
+*.publishsettings
+
+# Windows crash dump files
+*.dmp
+
+# Windows Store files
+[Dd]ebug_PS/
+[Rr]elease_PS/
+[Ee]ntreprise/
