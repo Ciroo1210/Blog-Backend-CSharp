@@ -19,9 +19,6 @@ public partial class BlogContext : DbContext
 
     public virtual DbSet<ReplyTable> Replies { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-CSTAVTI\\SQLEXPRESS;Database=Blog;Trusted_Connection=True;TrustServerCertificate=True;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PublicationTable>(entity =>
